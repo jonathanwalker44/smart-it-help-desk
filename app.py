@@ -1,6 +1,6 @@
 import os
 import psycopg2
-from flask import Flask
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -9,18 +9,30 @@ def get_db_connection():
 
 @app.route("/")
 def home():
-    return "<h1>Smart IT Help Desk</h1><p>ABC Company Capstone Project</p>"
+    return render_template("index.html")
 
-@app.route("/test-db")
-def test_db():
+@app.route("/submit-ticket", methods=["POST"])
+def submit_ticket():
+    requester_name = request.form["requester_name"]
+    requester_email = request.form["requester_email"]
+    issue_description = request.form["issue_description"]
+
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute("SELECT COUNT(*) FROM tickets;")
-    count = cur.fetchone()[0]
+
+    cur.execute(
+        """
+        INSERT INTO tickets (requester_name, requester_email, issue_description)
+        VALUES (%s, %s, %s)
+        """,
+        (requester_name, requester_email, issue_description)
+    )
+
+    conn.commit()
     cur.close()
     conn.close()
 
-    return f"<h1>Database Connected</h1><p>Tickets in database: {count}</p>"
+    return "<h2>Ticket submitted successfully!</h2><a href='/'>Submit another ticket</a>"
 
 if __name__ == "__main__":
     app.run(debug=True)
