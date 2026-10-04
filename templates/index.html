@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart IT Help Desk</title>
+</head>
+<body>
+    <h1>ABC Company IT Help Desk</h1>
+
+    <form method="POST" action="/submit-ticket">
+        <label>Name:</label><br>
+        <input type="text" name="requester_name" required><br><br>
+
+        <label>Email:</label><br>
+        <input type="email" name="requester_email" required><br><br>
+
+        <label>Issue Description:</label><br>
+        <textarea name="issue_description" required></textarea><br><br>
+
+        <button type="submit">Submit Ticket</button>
+    </form>
+</body>
+</html>
