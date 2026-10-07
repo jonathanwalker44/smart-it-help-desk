@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Ticket</title>
+</head>
+<body>
+
+    <h1>Edit Ticket #{{ ticket[0] }}</h1>
+
+    <p><strong>Name:</strong> {{ ticket[1] }}</p>
+    <p><strong>Email:</strong> {{ ticket[2] }}</p>
+    <p><strong>Issue:</strong> {{ ticket[3] }}</p>
+
+    <form method="POST">
+
+        <label>Category:</label><br>
+        <input type="text" name="category" value="{{ ticket[4] or '' }}"><br><br>
+
+        <label>Priority:</label><br>
+        <select name="priority">
+            <option value="Low" {% if ticket[5] == 'Low' %}selected{% endif %}>Low</option>
+            <option value="Medium" {% if ticket[5] == 'Medium' %}selected{% endif %}>Medium</option>
+            <option value="High" {% if ticket[5] == 'High' %}selected{% endif %}>High</option>
+        </select><br><br>
+
+        <label>Status:</label><br>
+        <select name="status">
+            <option value="Open" {% if ticket[6] == 'Open' %}selected{% endif %}>Open</option>
+            <option value="In Progress" {% if ticket[6] == 'In Progress' %}selected{% endif %}>In Progress</option>
+            <option value="Resolved" {% if ticket[6] == 'Resolved' %}selected{% endif %}>Resolved</option>
+        </select><br><br>
+
+        <label>Assigned To:</label><br>
+        <input type="text" name="assigned_to" value="{{ ticket[7] or '' }}"><br><br>
+
+        <label>Resolution Notes:</label><br>
+        <textarea name="resolution_notes" rows="5">{{ ticket[8] or '' }}</textarea><br><br>
+
+        <button type="submit">Save Changes</button>
+
+    </form>
+
+    <p><a href="/dashboard">Back to Dashboard</a></p>
+
+</body>
+</html>
