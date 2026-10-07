@@ -20,6 +20,7 @@
             <th>Status</th>
             <th>Assigned To</th>
             <th>Created</th>
+            <th>Actions</th> 
         </tr>
 
         {% for ticket in tickets %}
@@ -33,6 +34,9 @@
             <td>{{ ticket[6] }}</td>
             <td>{{ ticket[7] }}</td>
             <td>{{ ticket[9] }}</td>
+            <td>
+                <a href="/ticket/{{ ticket[0] }}">Edit</a>
+            </td>
         </tr>
         {% endfor %}
     </table>
