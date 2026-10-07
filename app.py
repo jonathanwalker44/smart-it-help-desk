@@ -36,3 +36,23 @@ def submit_ticket():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+@app.route("/dashboard")
+def dashboard():
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT id, requester_name, requester_email, issue_description,
+               category, priority, status, assigned_to,
+               resolution_notes, created_at
+        FROM tickets
+        ORDER BY created_at DESC
+    """)
+
+    tickets = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    return render_template("dashboard.html", tickets=tickets)
