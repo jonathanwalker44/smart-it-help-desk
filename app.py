@@ -1,8 +1,9 @@
 import os
 import psycopg2
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, url_for
 
 app = Flask(__name__)
+app.secret_key = os.environ["SECRET_KEY"]
 
 def get_db_connection():
     return psycopg2.connect(os.environ["DATABASE_URL"])
