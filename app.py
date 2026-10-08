@@ -35,6 +35,25 @@ def submit_ticket():
 
     return "<h2>Ticket submitted successfully!</h2><a href='/'>Submit another ticket</a>"
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    error = None
+
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        if (
+            username == os.environ["ADMIN_USERNAME"]
+            and password == os.environ["ADMIN_PASSWORD"]
+        ):
+            session["logged_in"] = True
+            return redirect(url_for("dashboard"))
+
+        error = "Invalid username or password."
+
+    return render_template("login.html", error=error)
+
 @app.route("/dashboard")
 def dashboard():
     conn = get_db_connection()
