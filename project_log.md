@@ -4,3 +4,7 @@ Connected the Flask application hosted on Render to the Supabase PostgreSQL data
 
 10/7/26
 Added the technician dashboard and ticket editing function. IT staff can view submitted tickets, and update category, priority, status, technician assignment, and resolution notes. Tested and it works properly. Added a login page to the application. Credentials are securely stored as Render environment variable. Login was successful and redirects authorized user to tech dashboard. Had error with login screen originially, this was rectified by moving login.html to its proper place under templates.
+
+10/11/2026
+Updated application so that tech dashboard and ticketing editing pages now require authentication. If user is not logged in they will be redirected to the login page. Ticket submission remains public. Added search functionality to the technician dashboard. This allows staff to search tickets by requestor, email, issue description, category, priority, status, and assigned technician. 
+Added simple automated ticket triage. This uses keywords in the submitted issue description to automatically assign category and priority for common issues. All tested and working.
