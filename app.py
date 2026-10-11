@@ -56,6 +56,9 @@ def login():
 
 @app.route("/dashboard")
 def dashboard():
+    if  not session.get("logged_in"):
+            return redirect(url_for("login"))
+
     conn = get_db_connection()
     cur = conn.cursor()
 
@@ -76,6 +79,9 @@ def dashboard():
 
 @app.route("/ticket/<int:ticket_id>", methods=["GET", "POST"])
 def edit_ticket(ticket_id):
+    if not session.get("logged_in"):
+        return redirect(url_for("login"))
+        
     conn = get_db_connection()
     cur = conn.cursor()
 
