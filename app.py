@@ -58,24 +58,39 @@ def login():
 def dashboard():
     if  not session.get("logged_in"):
             return redirect(url_for("login"))
+    search = request.args.get("search", "")
 
     conn = get_db_connection()
     cur = conn.cursor()
-
-    cur.execute("""
-        SELECT id, requester_name, requester_email, issue_description,
-               category, priority, status, assigned_to,
-               resolution_notes, created_at
-        FROM tickets
-        ORDER BY created_at DESC
-    """)
+    if search:
+        cur.execute("""
+            SELECT id, requester_name, requester_email, issue_description,
+                   category, priority, status, assigned_to,
+                   resolution_notes, created_at
+            FROM tickets
+            WHERE requester_name ILIKE %s
+               OR requester_email ILIKE %s
+               OR issue_description ILIKE %s
+               OR category ILIKE %s
+               OR priority ILIKE %s
+               OR status ILIKE %s
+            ORDER BY created_at DESC
+        """, tuple([f"%{search}%"] * 6))
+    else:
+        cur.execute("""
+            SELECT id, requester_name, requester_email, issue_description,
+                   category, priority, status, assigned_to,
+                   resolution_notes, created_at
+            FROM tickets
+            ORDER BY created_at DESC
+        """)
 
     tickets = cur.fetchall()
 
     cur.close()
     conn.close()
 
-    return render_template("dashboard.html", tickets=tickets)
+    return render_template("dashboard.html", tickets=tickets, search=search)
 
 @app.route("/ticket/<int:ticket_id>", methods=["GET", "POST"])
 def edit_ticket(ticket_id):
