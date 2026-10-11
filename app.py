@@ -74,8 +74,9 @@ def dashboard():
                OR category ILIKE %s
                OR priority ILIKE %s
                OR status ILIKE %s
+               OR assigned_to ILIKE %s
             ORDER BY created_at DESC
-        """, tuple([f"%{search}%"] * 6))
+        """, tuple([f"%{search}%"] * 7))
     else:
         cur.execute("""
             SELECT id, requester_name, requester_email, issue_description,
