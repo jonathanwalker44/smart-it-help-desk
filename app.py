@@ -8,6 +8,26 @@ app.secret_key = os.environ["SECRET_KEY"]
 def get_db_connection():
     return psycopg2.connect(os.environ["DATABASE_URL"])
 
+def triage_ticket(description):
+    text = description.lower()
+
+    category = "General"
+    priority = "Medium"
+
+    if any(word in text for word in ["password", "login", "account", "locked out"]):
+        category = "Account Access"
+    elif any(word in text for word in ["wifi", "network", "internet", "connection"]):
+        category = "Network"
+    elif any(word in text for word in ["printer", "monitor", "laptop", "keyboard", "mouse"]):
+        category = "Hardware"
+    elif any(word in text for word in ["outlook", "excel", "word", "software", "application"]):
+        category = "Software"
+
+    if any(phrase in text for phrase in ["urgent", "system down", "cannot work", "locked out"]):
+        priority = "High"
+
+    return category, priority
+
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -17,17 +37,29 @@ def submit_ticket():
     requester_name = request.form["requester_name"]
     requester_email = request.form["requester_email"]
     issue_description = request.form["issue_description"]
-
+    category, priority = triage_ticket(issue_description)
     conn = get_db_connection()
     cur = conn.cursor()
 
     cur.execute(
-        """
-        INSERT INTO tickets (requester_name, requester_email, issue_description)
-        VALUES (%s, %s, %s)
-        """,
-        (requester_name, requester_email, issue_description)
+    """
+    INSERT INTO tickets (
+        requester_name,
+        requester_email,
+        issue_description,
+        category,
+        priority
     )
+    VALUES (%s, %s, %s, %s, %s)
+    """,
+    (
+        requester_name,
+        requester_email,
+        issue_description,
+        category,
+        priority
+    )
+)
 
     conn.commit()
     cur.close()
