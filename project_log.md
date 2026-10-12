@@ -8,3 +8,11 @@ Added the technician dashboard and ticket editing function. IT staff can view su
 10/11/2026
 Updated application so that tech dashboard and ticketing editing pages now require authentication. If user is not logged in they will be redirected to the login page. Ticket submission remains public. Added search functionality to the technician dashboard. This allows staff to search tickets by requestor, email, issue description, category, priority, status, and assigned technician. 
 Added simple automated ticket triage. This uses keywords in the submitted issue description to automatically assign category and priority for common issues. All tested and working.
+
+10/12/2026
+Continued development and refinement of the IT Help Desk Application. I added dashboard summary statistics which show total tickets, open tickets, in-progress tickets, resolved tickets, and high-priority tickets. I tested to make sure that these work properly and match the tickets that are currently there.
+I added the logout functionality, so that techs can securely end their sessions. Tested and confirmed that protected pages will redirect back to the login page after logged out.
+Improved the tech dashboard by using Bootstrap. The dashboard now has a professional looking navigation bar, statistics card, a cleaner search bar, responsive ticket table, priority/status badges, cleanly formatted timestamps, create ticket function (so techs can create a ticket without going to the public page), and just an improved layout in general.
+I updated the public ticket submission page, technician login page, and ticket-editing page with consistent Bootstrap styling, to ensure a clean, professional, and easy to navigate layout.
+I made a ticket submission confirmation message, which also allows the user to click to submit another ticket as well.
+Confirmed that the application continues to operate as intended after changes were made. 
