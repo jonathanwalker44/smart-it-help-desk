@@ -65,7 +65,7 @@ def submit_ticket():
     cur.close()
     conn.close()
 
-    return "<h2>Ticket submitted successfully!</h2><a href='/'>Submit another ticket</a>"
+    return render_template("success.html")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
