@@ -85,6 +85,10 @@ def login():
         error = "Invalid username or password."
 
     return render_template("login.html", error=error)
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("login"))
 
 @app.route("/dashboard")
 def dashboard():
