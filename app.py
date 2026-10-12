@@ -119,25 +119,25 @@ def dashboard():
         """)
 
     tickets = cur.fetchall()
-cur.execute("SELECT COUNT(*) FROM tickets")
-total_tickets = cur.fetchone()[0]
+    cur.execute("SELECT COUNT(*) FROM tickets")
+    total_tickets = cur.fetchone()[0]
 
-cur.execute("SELECT COUNT(*) FROM tickets WHERE status = 'Open'")
-open_tickets = cur.fetchone()[0]
+    cur.execute("SELECT COUNT(*) FROM tickets WHERE status = 'Open'")
+    open_tickets = cur.fetchone()[0]
 
-cur.execute("SELECT COUNT(*) FROM tickets WHERE status = 'In Progress'")
-in_progress_tickets = cur.fetchone()[0]
+    cur.execute("SELECT COUNT(*) FROM tickets WHERE status = 'In Progress'")
+    in_progress_tickets = cur.fetchone()[0]
 
-cur.execute("SELECT COUNT(*) FROM tickets WHERE status = 'Resolved'")
-resolved_tickets = cur.fetchone()[0]
+    cur.execute("SELECT COUNT(*) FROM tickets WHERE status = 'Resolved'")
+    resolved_tickets = cur.fetchone()[0]
 
-cur.execute("SELECT COUNT(*) FROM tickets WHERE priority = 'High'")
-high_priority_tickets = cur.fetchone()[0]
+    cur.execute("SELECT COUNT(*) FROM tickets WHERE priority = 'High'")
+    high_priority_tickets = cur.fetchone()[0]
 
     cur.close()
     conn.close()
 
-   return render_template(
+    return render_template(
     "dashboard.html",
     tickets=tickets,
     search=search,
