@@ -8,6 +8,11 @@
 <body>
 
     <h1>Technician Dashboard</h1>
+    <p><strong>Total Tickets:</strong> {{ total_tickets }}</p>
+    <p><strong>Open:</strong> {{ open_tickets }}</p>
+    <p><strong>In Progress:</strong> {{ in_progress_tickets }}</p>
+    <p><strong>Resolved:</strong> {{ resolved_tickets }}</p>
+    <p><strong>High Priority:</strong> {{ high_priority_tickets }}</p>
     <form method="GET" action="/dashboard">
             <input type="text" name="search" placeholder="Search tickets..." value="{{ search }}">
             <button type="submit">Search</button> 
