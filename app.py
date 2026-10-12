@@ -119,11 +119,34 @@ def dashboard():
         """)
 
     tickets = cur.fetchall()
+cur.execute("SELECT COUNT(*) FROM tickets")
+total_tickets = cur.fetchone()[0]
+
+cur.execute("SELECT COUNT(*) FROM tickets WHERE status = 'Open'")
+open_tickets = cur.fetchone()[0]
+
+cur.execute("SELECT COUNT(*) FROM tickets WHERE status = 'In Progress'")
+in_progress_tickets = cur.fetchone()[0]
+
+cur.execute("SELECT COUNT(*) FROM tickets WHERE status = 'Resolved'")
+resolved_tickets = cur.fetchone()[0]
+
+cur.execute("SELECT COUNT(*) FROM tickets WHERE priority = 'High'")
+high_priority_tickets = cur.fetchone()[0]
 
     cur.close()
     conn.close()
 
-    return render_template("dashboard.html", tickets=tickets, search=search)
+   return render_template(
+    "dashboard.html",
+    tickets=tickets,
+    search=search,
+    total_tickets=total_tickets,
+    open_tickets=open_tickets,
+    in_progress_tickets=in_progress_tickets,
+    resolved_tickets=resolved_tickets,
+    high_priority_tickets=high_priority_tickets
+)
 
 @app.route("/ticket/<int:ticket_id>", methods=["GET", "POST"])
 def edit_ticket(ticket_id):
