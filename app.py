@@ -102,7 +102,7 @@ def dashboard():
         cur.execute("""
             SELECT id, requester_name, requester_email, issue_description,
                    category, priority, status, assigned_to,
-                   resolution_notes, created_at
+                   resolution_notes, created_at AT TIME ZONE 'America/New_York' AS created_at
             FROM tickets
             WHERE requester_name ILIKE %s
                OR requester_email ILIKE %s
@@ -117,7 +117,7 @@ def dashboard():
         cur.execute("""
             SELECT id, requester_name, requester_email, issue_description,
                    category, priority, status, assigned_to,
-                   resolution_notes, created_at
+                   resolution_notes, created_at AT TIME ZONE 'America/New_York' AS created_at
             FROM tickets
             ORDER BY created_at DESC
         """)
